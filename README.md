@@ -16,3 +16,5 @@ One folder that runs on BOTH Netlify and Vercel. All the server logic lives in `
 - `ADMIN_TOKEN_SECRET`  any long random string
 
 Both hosts can use the SAME Supabase project, so votes are shared.
+
+dev for vercel adjusted
