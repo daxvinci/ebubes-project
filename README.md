@@ -1,25 +1,18 @@
 # Award Night 2026
 
-This is the real shared version of the Award Night site.
+One folder that runs on BOTH Netlify and Vercel. All the server logic lives in `lib/core.js`;
+`netlify/functions/api.js` and `api/index.js` are tiny wrappers around it.
 
-Architecture:
-- Netlify hosts the website and serverless API.
-- Supabase stores the shared voting data.
-- No voter email is required.
-- Voters choose their name and use a private password.
-- Results remain unavailable until voting closes.
+## Files
+- `index.html`  the whole website
+- `lib/core.js`  server logic (voting, admin, results)
+- `api/index.js` + `vercel.json`  Vercel entry point
+- `netlify/functions/api.js` + `netlify.toml`  Netlify entry point
+- `supabase.sql`  database setup (run once in Supabase, SQL Editor)
 
-## Required setup
-1. Create a free Supabase project.
-2. Run `supabase.sql` in Supabase SQL Editor.
-3. Replace `CHANGE_ME_ADMIN_PASSWORD` in the SQL with the admin password you want BEFORE running it.
-4. Get the Supabase project URL and service-role key from Project Settings > API.
-5. In Netlify, add environment variables:
-   - SUPABASE_URL
-   - SUPABASE_SERVICE_ROLE_KEY
-   - ADMIN_TOKEN_SECRET (make this a long random string)
-6. Deploy this folder to Netlify.
+## Environment variables (same on Netlify and Vercel)
+- `SUPABASE_URL`  e.g. https://abcdefghij.supabase.co  (no /rest/v1)
+- `SUPABASE_SERVICE_ROLE_KEY`  the secret / service_role key. Never put it in index.html.
+- `ADMIN_TOKEN_SECRET`  any long random string
 
-Important: the service-role key must ONLY be stored as a Netlify environment variable. Never paste it into index.html.
-
-The current starter awards are examples and can be edited/deleted from Admin.
+Both hosts can use the SAME Supabase project, so votes are shared.

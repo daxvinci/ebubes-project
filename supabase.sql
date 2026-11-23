@@ -51,10 +51,10 @@ alter table awards enable row level security;
 alter table voters enable row level security;
 alter table votes enable row level security;
 
--- The app talks to Supabase through the Netlify function using the service key.
+-- The app talks to Supabase through the site's server function using the service key.
 -- No public browser access policies are needed.
 insert into event_settings(event_name,admin_password_hash)
-select 'Plans for Days x The Boys Awards 2026', encode(digest('EbubeAdmin123','sha256'),'hex')
+select 'Plans for Days x The Boys Awards 2026', encode(digest('CHANGE_ME_ADMIN_PASSWORD','sha256'),'hex')
 where not exists(select 1 from event_settings);
 
 insert into people(name,color) values
