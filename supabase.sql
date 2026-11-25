@@ -15,6 +15,7 @@ create table if not exists people (
   name text unique not null,
   color text not null,
   photo text default '',
+  sex text not null default 'male' check (sex in ('male','female')),
   created_at timestamptz not null default now()
 );
 
@@ -24,6 +25,7 @@ create table if not exists awards (
   category text not null check (category in ('Personality','Wild / Funny','Inspirational')),
   title text not null,
   type text not null default 'person' check (type in ('person','duo')),
+  audience text not null default 'all' check (audience in ('all','male','female')),
   created_at timestamptz not null default now()
 );
 
@@ -57,10 +59,10 @@ insert into event_settings(event_name,admin_password_hash)
 select 'Plans for Days x The Boys Awards 2026', encode(digest('CHANGE_ME_ADMIN_PASSWORD','sha256'),'hex')
 where not exists(select 1 from event_settings);
 
-insert into people(name,color) values
-('Chioma','#F3EEE6'),('Jonathan','#F5D447'),('Chinekwu','#EE8FBA'),
-('Ebube','#7C2637'),('Odinaka','#4F9B61'),('Emma','#2FAEAA'),
-('Josh','#4B7DDD'),('Siraj','#8964C7'),('Emeka','#EE9348')
+insert into people(name,color,sex) values
+('Chioma','#F3EEE6','female'),('Jonathan','#F5D447','male'),('Chinekwu','#EE8FBA','female'),
+('Ebube','#7C2637','female'),('Odinaka','#4F9B61','female'),('Emma','#2FAEAA','male'),
+('Josh','#4B7DDD','male'),('Siraj','#8964C7','male'),('Emeka','#EE9348','male')
 on conflict(name) do nothing;
 
 insert into awards(sort_order,category,title,type) values
